@@ -1,3 +1,8 @@
+**Fork note:** this fork fixes the OS line on iPads – it shows
+"iPadOS" instead of "iPhone OS". Only `patches/004-ios-os.sh` differs
+from upstream ([seph3421/fastfetch-ios](https://github.com/seph3421/fastfetch-ios)).
+Prebuilt rootless .deb: see [Releases](../../releases).
+
 # Fastfetch iOS / iPadOS
 
 An unofficial native iOS port of [Fastfetch](https://github.com/fastfetch-cli/fastfetch), modified to run natively on 
