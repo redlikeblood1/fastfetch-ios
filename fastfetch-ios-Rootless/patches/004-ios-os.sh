@@ -23,16 +23,23 @@ text = re.sub(
 start = text.index("void ffDetectOSImpl(FFOSResult* os)")
 text = text[:start] + r'''void ffDetectOSImpl(FFOSResult* os)
 {
-    char model[256];
+    char model[256] = "";
     size_t len = sizeof(model);
 
     ffStrbufSetStatic(&os->id, "macos");
-    ffStrbufSetStatic(&os->name, "iPhone OS");
 
     ffSysctlGetString("kern.osproductversion", &os->version);
     ffStrbufAppend(&os->versionID, &os->version);
 
-    if (sysctlbyname("hw.machine", model, &len, NULL, 0) == 0)
+    bool haveModel = (sysctlbyname("hw.machine", model, &len, NULL, 0) == 0);
+
+    // iPadOS exists since iOS 13; older iPads keep the classic name
+    if (haveModel && strncmp(model, "iPad", 4) == 0 && atoi(os->version.chars) >= 13)
+        ffStrbufSetStatic(&os->name, "iPadOS");
+    else
+        ffStrbufSetStatic(&os->name, "iPhone OS");
+
+    if (haveModel)
         ffStrbufSetS(&os->prettyName, model);
 
     if (os->prettyName.length > 0)
