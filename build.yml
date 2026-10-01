@@ -1,4 +1,4 @@
-name: build-rootless
+name: build-rootful
 on: workflow_dispatch
 
 jobs:
@@ -15,12 +15,12 @@ jobs:
 
       - name: Build
         run: |
-          cd fastfetch-ios-Rootless
+          cd fastfetch-ios-Rootful
           chmod +x build.sh
           ./build.sh
 
       - name: Upload deb
         uses: actions/upload-artifact@v4
         with:
-          name: fastfetch-rootless-deb
-          path: fastfetch-ios-Rootless/*.deb
+          name: fastfetch-rootful-deb
+          path: fastfetch-ios-Rootful/*.deb
