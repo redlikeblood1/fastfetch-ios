@@ -1,0 +1,26 @@
+name: build-rootful
+on: workflow_dispatch
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install tools
+        run: brew install cmake dpkg ldid-procursus
+
+      - name: Show SDK
+        run: xcrun --sdk iphoneos --show-sdk-path
+
+      - name: Build
+        run: |
+          cd fastfetch-ios-Rootful
+          chmod +x build.sh
+          ./build.sh
+
+      - name: Upload deb
+        uses: actions/upload-artifact@v4
+        with:
+          name: fastfetch-rootful-deb
+          path: fastfetch-ios-Rootful/*.deb
