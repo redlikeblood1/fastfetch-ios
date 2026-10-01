@@ -1,4 +1,4 @@
-name: build-rootful
+name: build-rootless
 on: workflow_dispatch
 
 jobs:
@@ -22,5 +22,5 @@ jobs:
       - name: Upload deb
         uses: actions/upload-artifact@v4
         with:
-          name: fastfetch-rootful-deb
-          path: fastfetch-ios-Rootful/*.deb
+          name: fastfetch-rootless-deb
+          path: fastfetch-ios-Rootless/*.deb
